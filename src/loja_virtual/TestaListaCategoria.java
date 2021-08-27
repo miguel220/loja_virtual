@@ -9,19 +9,16 @@ public class TestaListaCategoria {
 	public static void main(String[] args) throws SQLException {
 		
 		
-		try(Connection conec = new ConnectionFactory().recuperarConexao()){
-			
-			CategoriaDao categoriaDao = new CategoriaDao(conec);
-			
-			List<Categoria> categorias = categoriaDao.listaComProduto();
-			categorias.stream().forEach(ct -> {
-				System.out.println(ct.getNome());
-				
-					for(Produto produto : ct.getProdutos()) {
-						System.out.println(ct.getNome() + " - " + produto.getNome());
+		try(Connection con = new ConnectionFactory().recuperarConexao()) {
+            List<Categoria> categorias = new CategoriaDao(con).listaComProduto();
+            for(Categoria categoria : categorias) {
+                System.out.println(categoria.getNome());
+
+                for(Produto produto : categoria.getProdutos()) {
+                    System.out.println(categoria.getNome() + " - " + produto.getNome());
 					}
 				
-				});
+				};
 		}
 		
 		
